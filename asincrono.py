@@ -3,8 +3,25 @@ import asyncio
 from urllib.parse import urlparse
 import aiohttp
 from os import sep
+import sys
 
 
+async def wget(session, uri):  
+    async with session.get(uri) as response:  
+        if response.status != 200:  
+            return None  
+        if response.content_type.startswith("text/"):  
+            return await response.text()  
+        else:  
+            return await response.read()
+        
+async def download(session, uri):  
+    content = await wget(session, uri)  
+    if content is None:  
+        return None  
+    with open(uri.split(sep)[-1], "wb") as f:  
+        f.write(content)  
+        return uri 
 
 async def get_images_src_from_html(html_doc):  
     soup = BeautifulSoup(html_doc, "html.parser")  
@@ -46,22 +63,6 @@ async def main():
     web_page_uri = 'http://www.formation-python.com/'  
     async with aiohttp.ClientSession() as session:  
         await get_images(session, web_page_uri)
-
-async def wget(session, uri):  
-    async with session.get(uri) as response:  
-        if response.status != 200:  
-            return None  
-        if response.content_type.startswith("text/"):  
-            return await response.text()  
-        else:  
-            return await response.read() 
-
-async def download(session, uri):  
-    content = await wget(session, uri)  
-    if content is None:  
-        return None  
-    with open(uri.split(sep)[-1], "wb") as f:  
-        f.write(content)  
-        return uri 
+    print('Todo ok')
 
 asyncio.run(main()) 
