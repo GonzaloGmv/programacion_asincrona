@@ -1,6 +1,6 @@
 # programacion_asincrona
 
-El link a este repositorio e: (github)[https://github.com/GonzaloGmv/programacion_asincrona]
+El link a este repositorio e: [github](https://github.com/GonzaloGmv/programacion_asincrona)
 
 En esta tarea he realizado paso a paso este código que descarga imágenes de forma estándar y de forma asíncrona, para así ver la diferencia entre trabajar en asíncrono o no.
 
